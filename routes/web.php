@@ -47,6 +47,18 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// маршруты для админа
+
+
+
+
+Route::middleware(['auth', 'user_role:admin'])->group(function () {
+    //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/faculties', function () {
+    return view('admin.faculties'); // Предполагается, что у вас есть представление (view) с именем 'faculties.blade.php'
+})->name('faculties');
+});
+
 
 // для подтверждения почты
 

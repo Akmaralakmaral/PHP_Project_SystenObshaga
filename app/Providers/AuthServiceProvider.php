@@ -12,15 +12,15 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
-    protected $policies = [
-        //
-    ];
+    // protected $policies = [
+    //      User::class => AdminPolicy::class,
+    // ];
 
     /**
      * Register any authentication / authorization services.
      */
     public function boot(): void
     {
-        //
+
     }
 }
