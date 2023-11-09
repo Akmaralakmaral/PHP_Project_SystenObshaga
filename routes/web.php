@@ -55,8 +55,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'user_role:admin'])->group(function () {
     //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/faculties', function () {
-    return view('admin.faculties'); // Предполагается, что у вас есть представление (view) с именем 'faculties.blade.php'
-})->name('faculties');
+    return view('admin.faculties');})->name('faculties');
+
+    Route::get('/courses', function () {
+    return view('admin.courses');})->name('courses');
+
+    Route::get('/departments', function () {
+    return view('admin.departments');})->name('departments');
+
+
 });
 
 
