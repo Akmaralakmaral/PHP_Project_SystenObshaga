@@ -63,8 +63,18 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
     Route::get('/departments', function () {
     return view('admin.departments');})->name('departments');
 
+    Route::get('/users', function (Request $request) {
+        $users = User::get();
+
+    return view('admin.users', [
+        'users' => $users
+    ]);
+    return view('admin.users');})->name('users');
 
 });
+
+
+
 
 
 // для подтверждения почты

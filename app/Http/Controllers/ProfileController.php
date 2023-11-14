@@ -24,9 +24,14 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);        }
         elseif ($request->user()->user_role === 'employee') {
-            return view('profile_employee.edit', [
-            'user' => $request->user(),
-        ]);        }
+            $employee = Employee::where('user_id',$request->user()->id )->first();
+
+            return view('profile_employee.edit',
+                [
+                    'user' => $request->user(),
+                    'employee' => $employee
+                ]);
+        }
         else {
            return view('profile.edit', [
             'user' => $request->user(),
