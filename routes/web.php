@@ -1,8 +1,10 @@
 <?php
 
 use App\Models\User;
+use App\Models\Faculty;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FacultyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -52,8 +54,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'user_role:admin'])->group(function () {
     //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::get('/faculties', function () {
-    return view('admin.faculties');})->name('faculties');
+
 
     Route::get('/courses', function () {
     return view('admin.courses');})->name('courses');
@@ -61,6 +62,8 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
     Route::get('/departments', function () {
     return view('admin.departments');})->name('departments');
 
+
+    // users
     Route::get('/users', function (Request $request) {
         $users = User::get();
     return view('admin.users', [
@@ -68,12 +71,28 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
     ]);
     return view('admin.users');})->name('users');
 
-
     Route::patch('/users/{user}/updateRole', [UserController::class, 'updateRole'])
         ->name('users.updateRole');
 
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/users/{user}', [UserController::class, 'destroy_user'])->name('users.destroy_user');
 
+
+    // faculties
+    // Route::get('/faculties', function () {
+    // return view('admin.faculties');})->name('faculties');
+
+    // Route::get('/faculties', function (Request $request) {
+    //     $users = User::get();
+    // return view('admin.faculties', [
+    //     'faculties' => $faculties
+    // ]);
+    // return view('admin.faculties');})->name('faculties');
+
+
+    Route::get('/faculties', [FacultyController::class, 'showFaculty'])->name('faculties');
+    Route::post('/faculties', [FacultyController::class, 'createFaculty'])->name('faculties.create');
+    Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy_faculty'])->name('faculties.destroy_faculty');
+    Route::patch('/faculties/{faculty}', [FacultyController::class, 'updateFaculty'])->name('faculties.update');
 });
 
 
@@ -154,11 +173,4 @@ Route::post('/reset-password', function (Request $request) {
 require __DIR__.'/auth.php';
 
 
-
- // <!-- <x-dropdown-link :href="route('profile.edit')">
- //                            {{ __('Profile') }}
- //                        </x-dropdown-link> -->
- //
- //
- //
 

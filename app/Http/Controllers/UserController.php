@@ -25,7 +25,7 @@ class UserController extends Controller
         return view('admin.users', compact('users', 'roles'));
     }
 
-    public function destroy(User $user)
+    public function destroy_user(User $user)
     {
         // Ваш код для удаления пользователя
         $user->delete();

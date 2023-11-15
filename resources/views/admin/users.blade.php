@@ -17,9 +17,6 @@
                         </div>
                     @endif
                         <ul>
-                            <!-- @foreach ($users as $user)
-                                <li>{{ $user->name }} - {{ $user->email }}</li>
-                            @endforeach -->
 
 
                             <table class="table-auto">
@@ -59,7 +56,7 @@
                                             </td>
                                             <td class="border px-4 py-2">
                                                 <!-- Форма удаления пользователя -->
-                                                <form method="POST" action="{{ route('users.destroy', $user) }}">
+                                                <form method="POST" action="{{ route('users.destroy_user', $user) }}">
                                                     @csrf
                                                     @method('DELETE')
 
