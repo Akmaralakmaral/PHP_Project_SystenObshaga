@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -49,9 +50,6 @@ Route::middleware('auth')->group(function () {
 
 // маршруты для админа
 
-
-
-
 Route::middleware(['auth', 'user_role:admin'])->group(function () {
     //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/faculties', function () {
@@ -65,11 +63,16 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
 
     Route::get('/users', function (Request $request) {
         $users = User::get();
-
     return view('admin.users', [
         'users' => $users
     ]);
     return view('admin.users');})->name('users');
+
+
+    Route::patch('/users/{user}/updateRole', [UserController::class, 'updateRole'])
+        ->name('users.updateRole');
+
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 });
 
@@ -144,6 +147,10 @@ Route::post('/reset-password', function (Request $request) {
                 : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
 
+
+
+
+
 require __DIR__.'/auth.php';
 
 
@@ -151,3 +158,7 @@ require __DIR__.'/auth.php';
  // <!-- <x-dropdown-link :href="route('profile.edit')">
  //                            {{ __('Profile') }}
  //                        </x-dropdown-link> -->
+ //
+ //
+ //
+
