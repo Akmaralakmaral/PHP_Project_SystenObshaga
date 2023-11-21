@@ -24,6 +24,60 @@
         </div>
 
         <div>
+        <x-input-label for="faculty_id" :value="__('Faculty')" />
+        <x-select id="faculty_id" name="faculty_id" class="mt-1 block w-full" required>
+            @foreach($faculties as $faculty)
+                <option value="{{ $faculty->id }}" {{ old('faculty_id', $student->faculty_id) == $faculty->id ? 'selected' : '' }}>
+                    {{ $faculty->name_faculty }}
+                </option>
+            @endforeach
+        </x-select>
+        <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
+        </div>
+
+        <div>
+            <x-input-label for="department_id" :value="__('Department')" />
+            <x-select id="department_id" name="department_id" class="mt-1 block w-full" required>
+                @foreach($departments as $department)
+                    @if(old('faculty_id', $student->faculty_id) == $department->faculty_id)
+                        <option value="{{ $department->id }}" {{ old('department_id', $student->department_id) == $department->id ? 'selected' : '' }}>
+                            {{ $department->department_name }}
+                        </option>
+                    @endif
+                @endforeach
+            </x-select>
+            <x-input-error class="mt-2" :messages="$errors->get('department_id')" />
+        </div>
+
+        <div>
+            <x-input-label for="course_id" :value="__('Course')" />
+            <x-select id="course_id" name="course_id" class="mt-1 block w-full" required>
+                @foreach($courses as $course)
+                    <option value="{{ $course->id }}" {{ old('course_id', $course->id) == $course->id ? 'selected' : '' }}>
+                        {{ $course->course_name }}
+                    </option>
+                @endforeach
+            </x-select>
+            <x-input-error class="mt-2" :messages="$errors->get('course_id')" />
+        </div>
+
+        <div>
+            <x-input-label for="group" :value="__('Group')" />
+            <x-text-input id="group" name="group" type="text" class="mt-1 block w-full" :value="old('group', $student->group)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('group')" />
+        </div>
+
+        <div>
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
+            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $student->phone_number)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
+
+
+
+
+
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />

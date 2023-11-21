@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\Employee;
+use App\Models\Student;
+use App\Models\Faculty;
+use App\Models\Course;
+use App\Models\Department;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,9 +24,20 @@ class ProfileController extends Controller
     {
 
         if ($request->user()->user_role === 'student') {
+            $student = Student::where('user_id',$request->user()->id )->first();
+            $faculties = Faculty::all();
+            $course = Course::where('id',$request->user()->id )->first();
+            $departments = Department::all();
+
         return view('profile_students.edit', [
             'user' => $request->user(),
-        ]);        }
+            'student' => $request->user(),
+            'faculties' => $faculties,
+            'departments' => $departments,
+            'course' => $course,
+
+        ]);
+        }
         elseif ($request->user()->user_role === 'employee') {
             $employee = Employee::where('user_id',$request->user()->id )->first();
 
@@ -52,6 +67,24 @@ class ProfileController extends Controller
                 $request->user()->email_verified_at = null;
             }
             $request->user()->save();
+
+            $student = Student::where('user_id', $request->user()->id)->first();
+
+             if (!$student) {
+                $student = new Student();
+                $student->user_id = $request->user()->id;
+            }
+
+            $student->faculty_id = $request->input('faculty_id');
+            $student->course_id = $request->input('course_id');
+            $student->department_id = $request->input('department_id');
+            $student->group = $request->input('group');
+            $student->phone_number = $request->input('phone_number');
+            $student->save();
+
+
+
+
             return Redirect::route('profile_students.edit')->with('status', 'profile-updated');
 
         }

@@ -30,7 +30,8 @@ class FacultyController extends Controller
             'name_faculty' => $request->input('name_faculty'),
         ]);
 
-        return Redirect::route('faculties')->with('success', 'Faculty added successfully');
+
+        return redirect()->route('faculties')->with('success', 'Faculty added successfully');
     }
 
     public function updateFaculty(Faculty $faculty, Request $request): RedirectResponse

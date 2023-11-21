@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('aplications', function (Blueprint $table) {
-              $table->id();
+             $table->id();
             $table->string('fio');
             $table->date('birth_date');
             $table->string('nationality');
@@ -38,7 +38,6 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('statusaplication_id')->references('id')->on('status_aplications');
-
         });
     }
 

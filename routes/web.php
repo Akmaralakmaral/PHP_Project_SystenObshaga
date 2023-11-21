@@ -5,6 +5,7 @@ use App\Models\Faculty;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -54,14 +55,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'user_role:admin'])->group(function () {
     //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-
     Route::get('/courses', function () {
     return view('admin.courses');})->name('courses');
-
-    Route::get('/departments', function () {
-    return view('admin.departments');})->name('departments');
-
 
     // users
     Route::get('/users', function (Request $request) {
@@ -78,21 +73,18 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
 
 
     // faculties
-    // Route::get('/faculties', function () {
-    // return view('admin.faculties');})->name('faculties');
-
-    // Route::get('/faculties', function (Request $request) {
-    //     $users = User::get();
-    // return view('admin.faculties', [
-    //     'faculties' => $faculties
-    // ]);
-    // return view('admin.faculties');})->name('faculties');
-
-
     Route::get('/faculties', [FacultyController::class, 'showFaculty'])->name('faculties');
     Route::post('/faculties', [FacultyController::class, 'createFaculty'])->name('faculties.create');
     Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy_faculty'])->name('faculties.destroy_faculty');
     Route::patch('/faculties/{faculty}', [FacultyController::class, 'updateFaculty'])->name('faculties.update');
+
+    // departments
+
+    Route::get('/departments', [DepartmentController::class, 'showDepartment'])->name('departments');
+    Route::post('/departments', [DepartmentController::class, 'createDepartment'])->name('departments.create');
+    Route::delete('/departments/{department}', [DepartmentController::class, 'destroy_department'])->name('departments.destroy_department');
+
+    Route::patch('/departments/{department}', [DepartmentController::class, 'updateDepartment'])->name('departments.update');
 });
 
 

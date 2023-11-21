@@ -24,44 +24,16 @@
         </div>
 
         <div>
-            <x-input-label for="specialty_name" :value="__('Name')" />
+            <x-input-label for="specialty_name" :value="__('Employee position')" />
             <x-text-input id="specialty_name" name="specialty_name" type="text" class="mt-1 block w-full" :value="old('specialty_name', optional($employee)->specialty_name)" required />
             <x-input-error class="mt-2" :messages="$errors->get('specialty_name')" />
         </div>
 
         <div>
-            <x-input-label for="phone_number" :value="__('Name')" />
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
             <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', optional($employee)->phone_number)" required />
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
-
-
-
-
-        <!-- <div>
-            <x-input-label for="specialty_name" :value="__('Employee position')" />
-            <x-text-input id="specialty_name" name="specialty_name" type="text" class="mt-1 block w-full" :value="old('specialty_name', $user->specialty_name)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('specialty_name')" />
-        </div>
-
-        <div>
-            <x-input-label for="phone_number" :value="__('Phone Number')" />
-            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
-        </div> -->
-
-
-       <!--  <div>
-            <x-input-label for="specialty_name" :value="__('Employee position')" />
-            <x-text-input id="specialty_name" name="specialty_name" type="text" class="mt-1 block w-full" :value="old('specialty_name', $user->specialty_name)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('specialty_name')" />
-        </div>
-
-        <div>
-            <x-input-label for="phone_number" :value="__('Phone Number')" />
-            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
-        </div> -->
 
         <div>
             <x-input-label for="email" :value="__('Email')" />

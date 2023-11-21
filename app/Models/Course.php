@@ -11,10 +11,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\CanResetPassword;
+//use Illuminate\Auth\Passwords\CanResetPassword;
 use App\Http\Middleware\TrustHosts;
 
-
-class Department extends Model
+class Course extends Model
 {
      use HasApiTokens, HasFactory, Notifiable;
 
@@ -25,16 +25,12 @@ class Department extends Model
      */
     protected $fillable = [
         'id',
-        'department_name',
-        'faculty_id',
+        'degree',
+        'course_name',
     ];
 
-    public function faculty()
-    {
-        return $this->belongsTo(Faculty::class);
-    }
 
-     /**
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

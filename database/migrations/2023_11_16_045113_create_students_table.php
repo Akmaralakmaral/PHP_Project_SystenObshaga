@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('departaments_id');
-            $table->foreign('departaments_id')->references('id')->on('departaments');
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
 
             $table->unsignedBigInteger('faculty_id'); // Поле "ID факультета" (внешний ключ)
             $table->foreign('faculty_id')->references('id')->on('faculties');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('course_id')->references('id')->on('courses');
 
             $table->unsignedBigInteger('user_id'); // Поле "ID пользователя" (внешний ключ)
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
 
             $table->string('group'); // Поле "группа"
             $table->string('direction'); // Поле "направление"
