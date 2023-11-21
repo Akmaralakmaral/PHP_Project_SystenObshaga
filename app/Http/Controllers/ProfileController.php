@@ -83,7 +83,19 @@ class ProfileController extends Controller
             $student->save();
 
 
+             $course = Student::where('id', $request->user()->id)->first();
 
+             if (!$student) {
+                $student = new Student();
+                $student->user_id = $request->user()->id;
+            }
+
+            $student->faculty_id = $request->input('faculty_id');
+            $student->course_id = $request->input('course_id');
+            $student->department_id = $request->input('department_id');
+            $student->group = $request->input('group');
+            $student->phone_number = $request->input('phone_number');
+            $student->save();
 
             return Redirect::route('profile_students.edit')->with('status', 'profile-updated');
 
