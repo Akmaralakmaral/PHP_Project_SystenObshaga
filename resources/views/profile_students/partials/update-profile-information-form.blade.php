@@ -24,7 +24,7 @@
         </div>
 
 
-        <div>
+        <!-- <div>
             <x-input-label for="faculty_id" :value="__('Faculty')" />
             <select name="faculty_id" class="mt-1 block w-full" required>
                 @foreach($faculties as $faculty)
@@ -34,8 +34,66 @@
             <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
         </div>
 
+        <div>
+            <x-input-label for="department_id" :value="__('Department')" />
+            <select name="department_id" class="mt-1 block w-full" required>
+                @foreach($departments as $department)
+                    <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
+        </div> -->
 
 
+
+        <div>
+            <x-input-label for="faculty_id" :value="__('Faculty')" />
+            <select id="facultySelect" name="faculty_id" class="mt-1 block w-full" required>
+                @foreach($faculties as $faculty)
+                    <option value="{{ $faculty->id }}">{{ $faculty->name_faculty }}</option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
+        </div>
+
+        <div>
+            <x-input-label for="department_id" :value="__('Department')" />
+            <select id="departmentSelect" name="department_id" class="mt-1 block w-full" required>
+                <!-- Опции будут добавлены динамически с использованием JavaScript -->
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('department_id')" />
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const facultySelect = document.getElementById('facultySelect');
+                const departmentSelect = document.getElementById('departmentSelect');
+
+                // Слушаем изменения в выборе факультета
+                facultySelect.addEventListener('change', function () {
+                    const selectedFacultyId = facultySelect.value;
+
+                    // Очищаем текущие опции в списке кафедр
+                    departmentSelect.innerHTML = '';
+
+                    // Фильтруем кафедры по выбранному факультету
+                    const filteredDepartments = @json($departments->groupBy('faculty_id'));
+
+                    // Добавляем опции в список кафедр
+                    if (filteredDepartments[selectedFacultyId]) {
+                        filteredDepartments[selectedFacultyId].forEach(function (department) {
+                            const option = document.createElement('option');
+                            option.value = department.id;
+                            option.textContent = department.department_name;
+                            departmentSelect.appendChild(option);
+                        });
+                    }
+                });
+
+                // Инициализируем список кафедр при загрузке страницы
+                facultySelect.dispatchEvent(new Event('change'));
+            });
+        </script>
 
         <div>
             <x-input-label for="direction" :value="__('Direction')" />

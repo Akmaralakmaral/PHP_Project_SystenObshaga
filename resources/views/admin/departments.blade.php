@@ -40,11 +40,13 @@
                                                         <input type="text" class="form-control" id="department_name" name="department_name" value="{{ $department->department_name }}" required>
                                                     </div>
 
-                                                     <div class="mb-3">
+                                                    <div class="mb-3">
                                                         <label for="faculty_id" class="form-label">Select Faculty:</label>
                                                         <select name="faculty_id" required>
                                                             @foreach($faculties as $faculty)
-                                                                <option value="{{ $faculty->id }}">{{ $faculty->name_faculty }}</option>
+                                                                <option value="{{ $faculty->id }}" {{ $faculty->id == $department->faculty_id ? 'selected' : '' }}>
+                                                                    {{ $faculty->name_faculty }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
