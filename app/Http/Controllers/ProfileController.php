@@ -22,35 +22,32 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-
         if ($request->user()->user_role === 'student') {
-            $student = Student::where('user_id',$request->user()->id )->first();
-            $faculties = Faculty::all();
-            $course = Course::where('id',$request->user()->id )->first();
-            $departments = Department::all();
+        $student = Student::where('user_id', $request->user()->id)->first();
+        $faculties = Faculty::all();
+        $departments = Department::all(); // Add this line
+
+        // Corrected this line
+        $course = $student ? Course::where('id', $student->id)->first() : null;
 
         return view('profile_students.edit', [
             'user' => $request->user(),
-            'student' => $request->user(),
+            'student' => $student,
             'faculties' => $faculties,
-            'departments' => $departments,
+            'departments' => $departments, // Add this line
             'course' => $course,
-
         ]);
-        }
-        elseif ($request->user()->user_role === 'employee') {
-            $employee = Employee::where('user_id',$request->user()->id )->first();
+    } elseif ($request->user()->user_role === 'employee') {
+            $employee = Employee::where('user_id', $request->user()->id)->first();
 
-            return view('profile_employee.edit',
-                [
-                    'user' => $request->user(),
-                    'employee' => $employee
-                ]);
-        }
-        else {
-           return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+            return view('profile_employee.edit', [
+                'user' => $request->user(),
+                'employee' => $employee,
+            ]);
+        } else {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
         }
     }
 
@@ -59,60 +56,86 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        if ($request->user()->user_role === 'student') {
+          $user = $request->user();
 
+            if ($user->user_role === 'student') {
+                $request->user()->fill($request->validated());
+
+                if ($request->user()->isDirty('email')) {
+                    $request->user()->email_verified_at = null;
+                }
+
+                $request->user()->save();
+
+                $student = Student::where('user_id', $request->user()->id)->first();
+
+                if ($student) {
+                    // Update the existing student record
+                    $student->update([
+                        'faculty_id' => $request->input('faculty_id'),
+                        'department_id' => $request->input('department_id'),
+                        'group' => $request->input('group'),
+                        'direction' => $request->input('direction'),
+                        'phone_number' => $request->input('phone_number'),
+
+                    ]);
+
+                    $course = Course::where('id', $student->id)->first();
+
+                    if ($course) {
+                        // Update the existing course record
+                        $course->update([
+                            'degree' => $request->input('degree'),
+                            'course_name' => $request->input('course_name'),
+                        ]);
+                    } else {
+                        // Create a new course record for the user
+                        $newCourse = new Course();
+                        $newCourse->id = $student->id;
+                        $newCourse->degree = $request->input('degree');
+                        $newCourse->course_name = $request->input('course_name');
+                        $newCourse->save();
+                    }
+                } else {
+                    // Create a new student record for the user
+                    $newStudent = new Student();
+                    $newStudent->user_id = $request->user()->id;
+                    $newStudent->faculty_id = $request->input('faculty_id');
+                    $newStudent->department_id = $request->input('department_id');
+                    $newStudent->group = $request->input('group');
+                    $newStudent->direction = $request->input('direction');
+                    $newStudent->phone_number = $request->input('phone_number');
+                    $newStudent->save();
+
+
+                    // Create a new course record for the user
+                    $newCourse = new Course();
+                    $newCourse->id = $newStudent->id;
+                    $newCourse->degree = $request->input('degree');
+                    $newCourse->course_name = $request->input('course_name');
+                    $newCourse->save();
+                    $newStudent->course()->save($newCourse);
+                }
+
+                // Save the actual faculty and department names instead of IDs
+                $faculty = Faculty::find($request->input('faculty_id'));
+                $department = Department::find($request->input('department_id'));
+
+                return Redirect::route('profile_students.edit')->with([
+                    'status' => 'profile-updated',
+                    'faculty' => $faculty->name_faculty,
+                    'department' => $department->department_name,
+                ]);
+            } elseif ($user->user_role === 'employee') {
             $request->user()->fill($request->validated());
 
             if ($request->user()->isDirty('email')) {
                 $request->user()->email_verified_at = null;
             }
+
             $request->user()->save();
 
-            $student = Student::where('user_id', $request->user()->id)->first();
-
-             if (!$student) {
-                $student = new Student();
-                $student->user_id = $request->user()->id;
-            }
-
-            $student->faculty_id = $request->input('faculty_id');
-            $student->course_id = $request->input('course_id');
-            $student->department_id = $request->input('department_id');
-            $student->group = $request->input('group');
-            $student->phone_number = $request->input('phone_number');
-            $student->save();
-
-
-             $course = Student::where('id', $request->user()->id)->first();
-
-             if (!$student) {
-                $student = new Student();
-                $student->user_id = $request->user()->id;
-            }
-
-            $student->faculty_id = $request->input('faculty_id');
-            $student->course_id = $request->input('course_id');
-            $student->department_id = $request->input('department_id');
-            $student->group = $request->input('group');
-            $student->phone_number = $request->input('phone_number');
-            $student->save();
-
-            return Redirect::route('profile_students.edit')->with('status', 'profile-updated');
-
-        }
-        elseif ($request->user()->user_role === 'employee') {
-            $request->user()->fill($request->validated());
-
-            if ($request->user()->isDirty('email')) {
-                $request->user()->email_verified_at = null;
-            }
-            $request->user()->save();
-
-
-
-
-
-           $employee = Employee::where('user_id', $request->user()->id)->first();
+            $employee = Employee::where('user_id', $request->user()->id)->first();
 
             if ($employee) {
                 // Update the existing employee record
@@ -129,13 +152,8 @@ class ProfileController extends Controller
                 $newEmployee->save();
             }
 
-
-
             return Redirect::route('profile_employee.edit')->with('status', 'profile-updated');
-
-        }
-        else {
-
+        } else {
             $request->user()->fill($request->validated());
 
             if ($request->user()->isDirty('email')) {
@@ -143,8 +161,8 @@ class ProfileController extends Controller
             }
 
             $request->user()->save();
-            return Redirect::route('profile.edit')->with('status', 'profile-updated');
 
+            return Redirect::route('profile.edit')->with('status', 'profile-updated');
         }
     }
 
@@ -153,8 +171,6 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-
-
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);

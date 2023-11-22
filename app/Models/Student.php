@@ -25,7 +25,7 @@ class Student extends Model
      */
     protected $fillable = [
         'user_id',
-        'departaments_id',
+        'department_id', // Correct attribute name
         'faculty_id',
         'course_id',
         'group',

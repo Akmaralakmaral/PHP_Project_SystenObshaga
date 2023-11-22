@@ -23,94 +23,55 @@
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-
-        <!-- <div>
-            <x-input-label for="faculty_id" :value="__('Faculty')" />
-            <select name="faculty_id" class="mt-1 block w-full" required>
+        <div class="mb-3">
+            <label for="faculty_id" class="form-label">Select Faculty:</label>
+            <select name="faculty_id" required>
                 @foreach($faculties as $faculty)
                     <option value="{{ $faculty->id }}">{{ $faculty->name_faculty }}</option>
                 @endforeach
             </select>
-            <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
-        </div>
-
-        <div>
-            <x-input-label for="department_id" :value="__('Department')" />
-            <select name="department_id" class="mt-1 block w-full" required>
-                @foreach($departments as $department)
-                    <option value="{{ $department->id }}">{{ $department->department_name }}</option>
-                @endforeach
-            </select>
-            <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
-        </div> -->
-
-
-
-        <div>
-            <x-input-label for="faculty_id" :value="__('Faculty')" />
-            <select id="facultySelect" name="faculty_id" class="mt-1 block w-full" required>
-                @foreach($faculties as $faculty)
-                    <option value="{{ $faculty->id }}">{{ $faculty->name_faculty }}</option>
-                @endforeach
-            </select>
-            <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
         </div>
 
         <div>
             <x-input-label for="department_id" :value="__('Department')" />
             <select id="departmentSelect" name="department_id" class="mt-1 block w-full" required>
-                <!-- Опции будут добавлены динамически с использованием JavaScript -->
+                @foreach($departments as $department)
+                    <option value="{{ $department->id }}" {{ old('department_id', optional($student)->department_id) == $department->id ? 'selected' : '' }}>
+                        {{ $department->department_name }}
+                    </option>
+                @endforeach
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('department_id')" />
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const facultySelect = document.getElementById('facultySelect');
-                const departmentSelect = document.getElementById('departmentSelect');
-
-                // Слушаем изменения в выборе факультета
-                facultySelect.addEventListener('change', function () {
-                    const selectedFacultyId = facultySelect.value;
-
-                    // Очищаем текущие опции в списке кафедр
-                    departmentSelect.innerHTML = '';
-
-                    // Фильтруем кафедры по выбранному факультету
-                    const filteredDepartments = @json($departments->groupBy('faculty_id'));
-
-                    // Добавляем опции в список кафедр
-                    if (filteredDepartments[selectedFacultyId]) {
-                        filteredDepartments[selectedFacultyId].forEach(function (department) {
-                            const option = document.createElement('option');
-                            option.value = department.id;
-                            option.textContent = department.department_name;
-                            departmentSelect.appendChild(option);
-                        });
-                    }
-                });
-
-                // Инициализируем список кафедр при загрузке страницы
-                facultySelect.dispatchEvent(new Event('change'));
-            });
-        </script>
-
         <div>
             <x-input-label for="direction" :value="__('Direction')" />
-            <x-text-input id="direction" name="direction" type="text" class="mt-1 block w-full" :value="old('direction', $student->direction)" required />
+            <x-text-input id="direction" name="direction" type="text" class="mt-1 block w-full" :value="old('direction', optional($student)->direction)" required />
             <x-input-error class="mt-2" :messages="$errors->get('direction')" />
         </div>
 
-
-        <div>
+        <<div>
             <x-input-label for="group" :value="__('Group')" />
-            <x-text-input id="group" name="group" type="text" class="mt-1 block w-full" :value="old('group', $student->group)" required />
+            <x-text-input id="group" name="group" type="text" class="mt-1 block w-full" :value="old('group', optional($student)->group)" required />
             <x-input-error class="mt-2" :messages="$errors->get('group')" />
         </div>
 
         <div>
+            <x-input-label for="degree" :value="__('Degree')" />
+            <x-text-input id="degree" name="degree" type="text" class="mt-1 block w-full" :value="old('degree', optional($course)->degree)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('degree')" />
+        </div>
+
+        <div>
+            <x-input-label for="course_name" :value="__('Course Name')" />
+            <x-text-input id="course_name" name="course_name" type="text" class="mt-1 block w-full" :value="old('course_name', optional($course)->course_name)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('course_name')" />
+        </div>
+
+
+       <div>
             <x-input-label for="phone_number" :value="__('Phone Number')" />
-            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $student->phone_number)" required />
+            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', optional($student)->phone_number)" required />
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
 
