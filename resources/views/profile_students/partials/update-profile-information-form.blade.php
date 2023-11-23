@@ -23,13 +23,25 @@
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="faculty_id" class="form-label">Select Faculty:</label>
             <select name="faculty_id" required>
                 @foreach($faculties as $faculty)
                     <option value="{{ $faculty->id }}">{{ $faculty->name_faculty }}</option>
                 @endforeach
             </select>
+        </div> -->
+
+         <div>
+            <x-input-label for="faculty_id" :value="__('Faculty')" />
+
+            <select name="faculty_id" class="mt-1 block w-full" required>
+                @foreach($faculties as $faculty)
+                    <option value="{{ $faculty->id }}">{{ $faculty->name_faculty }}</option>
+                @endforeach
+            </select>
+
+            <x-input-error class="mt-2" :messages="$errors->get('faculty_id')" />
         </div>
 
         <div>
