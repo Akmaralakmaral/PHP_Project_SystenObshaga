@@ -105,7 +105,7 @@ class ProfileController extends Controller
                     $newStudent->group = $request->input('group');
                     $newStudent->direction = $request->input('direction');
                     $newStudent->phone_number = $request->input('phone_number');
-                    $newStudent->save();
+
 
 
                     // Create a new course record for the user
@@ -114,7 +114,8 @@ class ProfileController extends Controller
                     $newCourse->degree = $request->input('degree');
                     $newCourse->course_name = $request->input('course_name');
                     $newCourse->save();
-                    $newStudent->course()->save($newCourse);
+                    // $newCourse->course()->save($newCourse);
+                    $newStudent->save();
                 }
 
                 // Save the actual faculty and department names instead of IDs
