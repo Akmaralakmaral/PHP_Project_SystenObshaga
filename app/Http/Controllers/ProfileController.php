@@ -108,14 +108,14 @@ class ProfileController extends Controller
 
 
 
-                    // // Create a new course record for the user
-                    // $newCourse = new Course();
-                    // $newCourse->id = $newStudent->id;
-                    // $newCourse->degree = $request->input('degree');
-                    // $newCourse->course_name = $request->input('course_name');
-                    // $newCourse->save();
-                    // // $newCourse->course()->save($newCourse);
-                    // $newStudent->save();
+                    // Create a new course record for the user
+                    $newCourse = new Course();
+                    $newCourse->id = $newStudent->id;
+                    $newCourse->degree = $request->input('degree');
+                    $newCourse->course_name = $request->input('course_name');
+                    $newCourse->save();
+                    // $newCourse->course()->save($newCourse);
+                    $newStudent->save();
                 }
 
                 // Save the actual faculty and department names instead of IDs
