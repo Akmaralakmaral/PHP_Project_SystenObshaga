@@ -77,6 +77,7 @@ class ProfileController extends Controller
                         'group' => $request->input('group'),
                         'direction' => $request->input('direction'),
                         'phone_number' => $request->input('phone_number'),
+                        'course_id' => $course->id,
 
                     ]);
 
@@ -97,6 +98,10 @@ class ProfileController extends Controller
                         $newCourse->save();
                     }
                 } else {
+
+
+
+
                     // Create a new student record for the user
                     $newStudent = new Student();
                     $newStudent->user_id = $request->user()->id;
@@ -106,15 +111,14 @@ class ProfileController extends Controller
                     $newStudent->direction = $request->input('direction');
                     $newStudent->phone_number = $request->input('phone_number');
 
-
-
-                    // Create a new course record for the user
+                     // Create a new course record for the user
                     $newCourse = new Course();
                     $newCourse->id = $newStudent->id;
                     $newCourse->degree = $request->input('degree');
                     $newCourse->course_name = $request->input('course_name');
                     $newCourse->save();
-                    // $newCourse->course()->save($newCourse);
+
+                    $newStudent->course_id = $newCourse->id;
                     $newStudent->save();
                 }
 
