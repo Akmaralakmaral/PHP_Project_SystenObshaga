@@ -88,6 +88,16 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
 });
 
 
+// маршруты для студента
+
+Route::middleware(['auth', 'user_role_student:student'])->group(function () {
+
+    //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/application', function () {
+    return view('student.application');})->name('application');
+
+});
+
 
 
 
