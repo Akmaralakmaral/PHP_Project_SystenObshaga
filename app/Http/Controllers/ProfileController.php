@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-
-
 class ProfileController extends Controller
 {
     /**
@@ -28,7 +26,7 @@ class ProfileController extends Controller
         $departments = Department::all(); // Add this line
 
         // Corrected this line
-        $course = $student ? Course::where('id', $student->id)->first() : null;
+        $course = $student ? Course::where('id', $student->course_id)->first() : null;
 
         return view('profile_students.edit', [
             'user' => $request->user(),
@@ -77,11 +75,11 @@ class ProfileController extends Controller
                         'group' => $request->input('group'),
                         'direction' => $request->input('direction'),
                         'phone_number' => $request->input('phone_number'),
-                        'course_id' => $course->id,
+                        'course_id' => $request->input('course_id'),
 
                     ]);
 
-                    $course = Course::where('id', $student->id)->first();
+                    $course = Course::where('id', $student->course_id)->first();
 
                     if ($course) {
                         // Update the existing course record
@@ -98,9 +96,6 @@ class ProfileController extends Controller
                         $newCourse->save();
                     }
                 } else {
-
-
-
 
                     // Create a new student record for the user
                     $newStudent = new Student();

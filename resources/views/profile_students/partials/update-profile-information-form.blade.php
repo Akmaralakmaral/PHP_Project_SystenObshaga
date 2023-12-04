@@ -62,12 +62,17 @@
             <x-input-error class="mt-2" :messages="$errors->get('direction')" />
         </div>
 
-        <<div>
+        <div>
             <x-input-label for="group" :value="__('Group')" />
             <x-text-input id="group" name="group" type="text" class="mt-1 block w-full" :value="old('group', optional($student)->group)" required />
             <x-input-error class="mt-2" :messages="$errors->get('group')" />
         </div>
 
+        <div>
+            <x-input-label for="course_id" />
+            <x-text-input id="course_id" name="course_id" type="hidden" class="mt-1 block w-full" :value="old('course_id', optional($student)->course_id)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('course_id')" />
+        </div>
         <div>
             <x-input-label for="degree" :value="__('Degree')" />
             <x-text-input id="degree" name="degree" type="text" class="mt-1 block w-full" :value="old('degree', optional($course)->degree)" required />

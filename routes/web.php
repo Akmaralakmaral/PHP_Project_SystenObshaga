@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -93,8 +94,13 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
 Route::middleware(['auth', 'user_role_student:student'])->group(function () {
 
     //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::get('/application', function () {
-    return view('student.application');})->name('application');
+
+
+    Route::get('/application', [ApplicationController::class, 'showOrCreateForStudent'])->name('application');
+
+
+    Route::get('/createapplication', [ApplicationController::class, 'showOrCreateForStudent'])->name('createapplication');
+     //Route::post('/createapplication', [ApplicationController::class, 'createApplication'])->name('createapplication.store');
 
 });
 
