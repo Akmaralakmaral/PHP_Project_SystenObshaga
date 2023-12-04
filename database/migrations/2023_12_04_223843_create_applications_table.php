@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('aplications', function (Blueprint $table) {
-             $table->id();
+        Schema::create('applications', function (Blueprint $table) {
+
+           $table->id();
             $table->string('fio');
             $table->date('birth_date');
             $table->string('nationality');
@@ -20,12 +21,16 @@ return new class extends Migration
             $table->string('passport_id');
             $table->string('issuing_authority');
             $table->string('iin');
-            $table->string('statement_photo'); // Путь к фото заявления
-            $table->string('photo_3_4'); // Путь к фото 3/4
-            $table->string('education_work_certificate'); // Путь к справке с места учебы/работы
-            $table->string('payment_receipt'); // Путь к чеку оплаты
-            $table->string('medical_certificate'); // Путь к медицинской справке
-            $table->string('fluorography'); // Путь к флюорографии
+
+            $table->text('statement_photo_path')->nullable();
+            $table->text('education_work_certificate_path')->nullable();
+            $table->text('photo_3_4_path')->nullable();
+            $table->text('payment_receipt_path')->nullable();
+            $table->text('medical_certificate_path')->nullable();
+            $table->text('fluorography_path')->nullable();
+
+
+
             $table->string('residence_address');
             $table->unsignedBigInteger('user_id'); // Поле "ID пользователя" (внешний ключ)
             $table->unsignedBigInteger('student_id'); // Поле "ID студента" (внешний ключ)
@@ -46,6 +51,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('aplications');
+        Schema::dropIfExists('applications');
     }
 };

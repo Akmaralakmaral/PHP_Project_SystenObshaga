@@ -31,12 +31,15 @@ class Application extends Model
         'passport_id',
         'issuing_authority',
         'iin',
-        'statement_photo',
-        'photo_3_4',
-        'education_work_certificate',
-        'payment_receipt',
-        'medical_certificate',
-        'fluorography',
+
+        'statement_photo_path',
+        'education_work_certificate_path',
+        'photo_3_4_path',
+        'payment_receipt_path',
+        'medical_certificate_path',
+        'fluorography_path',
+
+
         'residence_address',
         'user_id',
         'student_id',

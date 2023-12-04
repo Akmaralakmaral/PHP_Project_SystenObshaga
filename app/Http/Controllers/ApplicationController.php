@@ -47,16 +47,29 @@ class ApplicationController extends Controller
             'passport_id' => 'required|string',
             'issuing_authority' => 'required|string',
             'iin' => 'required|string',
+
             'statement_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_3_4' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'education_work_certificate' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'photo_3_4' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'payment_receipt' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'medical_certificate' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'fluorography' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+
             'residence_address' => 'required|string',
 
 
         ]);
+
+
+         $statementPhotoPath = $request->file('statement_photo')->store('photos');
+        $educationWorkCertificatePath = $request->file('education_work_certificate')->store('certificates');
+        $photo34Path = $request->file('photo_3_4')->store('photos');
+        $paymentReceiptPath = $request->file('payment_receipt')->store('receipts');
+        $medicalCertificatePath = $request->file('medical_certificate')->store('certificates');
+        $fluorographyPath = $request->file('fluorography')->store('fluorographies');
+
+
+
 
         // Создание новой заявки
        // Application::create($request->all());
@@ -70,12 +83,16 @@ class ApplicationController extends Controller
             'passport_id' => $request->passport_id,
             'issuing_authority' => $request->issuing_authority,
             'iin' => $request->iin,
-            'statement_photo' => $request->statement_photo,
-            'photo_3_4' => $request->photo_3_4,
-            'education_work_certificate' => $request->education_work_certificate,
-            'payment_receipt' => $request->payment_receipt,
-            'medical_certificate' => $request->medical_certificate,
-            'fluorography' => $request->fluorography,
+
+
+            'statement_photo_path' => $statementPhotoPath,
+            'education_work_certificate_path' => $educationWorkCertificatePath,
+            'photo_3_4_path' => $photo34Path,
+            'payment_receipt_path' => $paymentReceiptPath,
+            'medical_certificate_path' => $medicalCertificatePath,
+            'fluorography_path' => $fluorographyPath,
+
+
             'residence_address' => $request->residence_address,
             'user_id' => $request->user()->id,
             'student_id' => $request->student()->id,
@@ -83,9 +100,10 @@ class ApplicationController extends Controller
             'statusaplication_id' => 1,
         ]);
 
-
-        return redirect()->route('dashboard') // Замените 'applications.index' на имя вашего маршрута для списка заявок
+        return redirect()->route('/') // Замените 'applications.index' на имя вашего маршрута для списка заявок
             ->with('success', 'Заявка успешно создана.');
+
+
     }
 
 }

@@ -97,7 +97,7 @@ Route::middleware(['auth', 'user_role_student:student'])->group(function () {
     Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
 
     // Для сохранения заявки в базе данных
-    Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+    Route::post('/applications/create', [ApplicationController::class, 'store'])->name('applications.store');
 
 
 });
