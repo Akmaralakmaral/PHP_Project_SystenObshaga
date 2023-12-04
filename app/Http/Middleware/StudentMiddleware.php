@@ -13,7 +13,7 @@ class StudentMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
         if (auth()->check() && auth()->user()->user_role === 'student') {
             return $next($request);
@@ -21,4 +21,7 @@ class StudentMiddleware
 
         return redirect('/');
     }
+
+
 }
+

@@ -93,14 +93,12 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
 
 Route::middleware(['auth', 'user_role_student:student'])->group(function () {
 
-    //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    // Для отображения формы заявки
+    Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
 
+    // Для сохранения заявки в базе данных
+    Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
 
-    Route::get('/application', [ApplicationController::class, 'showOrCreateForStudent'])->name('application');
-
-
-    Route::get('/createapplication', [ApplicationController::class, 'showOrCreateForStudent'])->name('createapplication');
-     //Route::post('/createapplication', [ApplicationController::class, 'createApplication'])->name('createapplication.store');
 
 });
 

@@ -11,6 +11,8 @@
                 <form method="POST" action="{{ route('applications.store') }}" enctype="multipart/form-data">
                     @csrf
 
+
+
                     <!-- Добавьте свои поля формы здесь -->
                     <div class="mb-4">
                         <label for="fio" class="block text-sm font-medium text-gray-700">ФИО</label>
@@ -53,6 +55,11 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="statement_photo" class="block text-sm font-medium text-gray-700">Заявление</label>
+                        <input type="file" name="statement_photo" id="statement_photo" accept="image/*" required />
+                    </div>
+
+                    <div class="mb-4">
                         <label for="education_work_certificate" class="block text-sm font-medium text-gray-700">Справка с места учебы или работы</label>
                         <input type="file" name="education_work_certificate" id="education_work_certificate" accept="image/*,application/pdf" required />
                     </div>
@@ -82,9 +89,12 @@
                         <textarea name="residence_address" id="residence_address" class="mt-1 p-2 border rounded-md w-full" required></textarea>
                     </div>
 
-                    <div class="mt-4">
-                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Отправить Заявку</button>
+                    <div class="flex items-center justify-end mt-4">
+                        <x-primary-button class="ml-4">
+                            {{ __('Send Application') }}
+                        </x-primary-button>
                     </div>
+
                 </form>
             </div>
         </div>

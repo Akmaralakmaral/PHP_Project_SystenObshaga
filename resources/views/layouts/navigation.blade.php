@@ -29,11 +29,12 @@
                         </x-nav-link>
                     @endif
 
-                    @if (Auth::check() && (Auth::user()->user_role === 'student' || Auth::user()->user_role === 'employee'))
-                        <x-nav-link :href="route('application')" :active="request()->routeIs('application')">
-                            {{ __('Application') }}
+                    @if (Auth::check() && (Auth::user()->user_role === 'student'))
+                        <x-nav-link :href="route('applications.create')" :active="request()->routeIs('applications.create')">
+                            {{ __('Create Application') }}
                         </x-nav-link>
                     @endif
+
 
                     <!-- <x-nav-link :href="route('faculties')" :active="request()->routeIs('faculties')">
                         {{ __('Faculties') }}

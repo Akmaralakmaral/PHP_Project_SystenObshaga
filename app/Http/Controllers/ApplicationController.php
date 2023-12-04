@@ -20,49 +20,72 @@ use Illuminate\View\View;
 class ApplicationController extends Controller
 {
 
+     /**
+     * Отображает форму для создания заявки.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('student.createapplication'); // Замените 'applications.create' на имя вашего представления для создания заявки
+    }
+
     /**
-     * Создание новой заявки.
+     * Сохраняет новую заявку в базе данных.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        // Проверка входных данных запроса
+        // Валидация данных
         $request->validate([
             'fio' => 'required|string',
             'birth_date' => 'required|date',
             'nationality' => 'required|string',
             'gender' => 'required|string',
-            'statement_photo' => 'required|mimes:jpeg,png,pdf',
+            'passport_id' => 'required|string',
+            'issuing_authority' => 'required|string',
             'iin' => 'required|string',
-            'photo_3_4' => 'required|mimes:jpeg,png',
-            'education_work_certificate' => 'required|mimes:jpeg,png,pdf',
-            'payment_receipt' => 'required|mimes:jpeg,png',
-            'medical_certificate' => 'required|mimes:jpeg,png',
-            'fluorography' => 'required|mimes:jpeg,png',
+            'statement_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo_3_4' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'education_work_certificate' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'payment_receipt' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'medical_certificate' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'fluorography' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'residence_address' => 'required|string',
+
+
         ]);
 
+        // Создание новой заявки
+       // Application::create($request->all());
+//$newEmployee->user_id = $request->user()->id;
 
         $application = Application::create([
-            'fio' => $request->input('fio'),
-            'birth_date' => $request->input('birth_date'),
-            'nationality' => $request->input('nationality'),
-            'gender' => $request->input('gender'),
-            'statement_photo' => $request->file('statement_photo')->store('documents'),
-            'iin' => $request->input('iin'),
-            'photo_3_4' => $request->file('photo_3_4')->store('photos'),
-            'education_work_certificate' => $request->file('education_work_certificate')->store('documents'),
-            'payment_receipt' => $request->file('payment_receipt')->store('photos'),
-            'medical_certificate' => $request->file('medical_certificate')->store('photos'),
-            'fluorography' => $request->file('fluorography')->store('photos'),
-            'residence_address' => $request->input('residence_address'),
-            'statusaplication_id' => 'NEW',
+            'fio' => $request->fio,
+            'birth_date' => $request->birth_date,
+            'nationality' => $request->nationality,
+            'gender' => $request->gender,
+            'passport_id' => $request->passport_id,
+            'issuing_authority' => $request->issuing_authority,
+            'iin' => $request->iin,
+            'statement_photo' => $request->statement_photo,
+            'photo_3_4' => $request->photo_3_4,
+            'education_work_certificate' => $request->education_work_certificate,
+            'payment_receipt' => $request->payment_receipt,
+            'medical_certificate' => $request->medical_certificate,
+            'fluorography' => $request->fluorography,
+            'residence_address' => $request->residence_address,
+            'user_id' => $request->user()->id,
+            'student_id' => $request->student()->id,
+            'employee_id' => null,
+            'statusaplication_id' => 1,
         ]);
 
-        return redirect()->route('createapplication')->with('success', 'Application added successfully');
-    }
 
+        return redirect()->route('dashboard') // Замените 'applications.index' на имя вашего маршрута для списка заявок
+            ->with('success', 'Заявка успешно создана.');
+    }
 
 }
