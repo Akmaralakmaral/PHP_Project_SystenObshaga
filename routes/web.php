@@ -6,7 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AplicationController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -30,9 +31,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+/*
+1. get to return a view with a file selection and upload
+2. post with uploading a file
+ */
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -89,17 +95,26 @@ Route::middleware(['auth', 'user_role:admin'])->group(function () {
 });
 
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    // Route::post('/image/upload', 'App\Http\Controllers\ImageController@upload')->name('image.upload');
+
+    Route::post('/dashboard', 'App\Http\Controllers\ImageController@upload')->name('image.upload');
+    Route::get('/gallery', [ImageController::class, 'getAllImages'])->name('image.gallery');
+});
+
+
 // маршруты для студента
 
-Route::middleware(['auth', 'user_role_student:student'])->group(function () {
+Route::get('/application', function () {
+    return view('student.application');
+})->middleware(['auth', 'user_role_student:student'])->name('application');
 
-    // Для отображения формы заявки
-    Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
-
-    // Для сохранения заявки в базе данных
-    Route::post('/applications/create', [ApplicationController::class, 'store'])->name('applications.store');
-
-
+Route::middleware(['auth'])->group(function () {
+    Route::post('/application', 'App\Http\Controllers\ApplicationController@upload')->name('application.upload');
 });
 
 

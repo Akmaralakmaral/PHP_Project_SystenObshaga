@@ -20,33 +20,31 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h2>фото</h2>
+                     <h1>Image Gallery</h1>
 
-                    <form action="{{ route('image.upload') }}" method="post" enctype="multipart/form-data" >
-                        {{csrf_field()}}
-
-                        <div class="form-group">
-                            <input type="file" name="image">
-
+                   <!--  @foreach ($images as $image)
+                        <div>
+                            <img src="{{ asset('/storage/' . $image->path) }}" alt="Image">
+                            <img src="{{ asset('/storage/' . $image->path1) }}" alt="Image1">
+                            <p>User ID: {{ $image->user_id }}</p>
                         </div>
+                    @endforeach -->
 
-                        @isset ($path)
-                        <img class="img-fluid" src="{{ asset('/storage/' .  $path) }}">
 
-                        @endisset
 
-                        <div class="form-group">
-                            <input type="file" name="image2">
+                    @foreach ($images as $image)
+                        <div>
+                            <h3>User ID: {{ $image->user_id }}</h3>
+                            <img src="{{ asset('/storage/' . $image->path) }}" alt="Image 1" style="max-width: 400px; max-height: 400px;">
 
+
+                            <img src="{{ asset('/storage/' . $image->path1) }}" alt="Image 2" style="max-width: 400px; max-height: 400px;">
+
+
+
+                            <hr>
                         </div>
-
-                        @isset ($path)
-                        <img class="img-fluid" src="{{ asset('/storage/' .  $path2) }}">
-
-                        @endisset
-
-                        <button class="btn btn-default" type="submit">загрузка</button>
-                    </form>
+                    @endforeach
 
 
                 </div>

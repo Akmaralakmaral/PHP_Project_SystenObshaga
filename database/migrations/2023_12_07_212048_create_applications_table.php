@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('applications', function (Blueprint $table) {
-
-           $table->id();
+             $table->id();
             $table->string('fio');
             $table->date('birth_date');
             $table->string('nationality');
@@ -33,16 +32,19 @@ return new class extends Migration
 
             $table->string('residence_address');
             $table->unsignedBigInteger('user_id'); // Поле "ID пользователя" (внешний ключ)
-            $table->unsignedBigInteger('student_id'); // Поле "ID студента" (внешний ключ)
-            $table->unsignedBigInteger('employee_id'); // Поле "ID сотрудника" (внешний ключ)
-            $table->unsignedBigInteger('statusaplication_id'); // Поле "ID статуса заявки" (внешний ключ)
+            $table->unsignedBigInteger('student_id')->nullable(); // Поле "ID студента" (внешний ключ)
+
+
+
+            $table->unsignedBigInteger('employee_id')->nullable(); // Поле "ID сотрудника" (внешний ключ)
+            $table->unsignedBigInteger('statusaplication_id')->nullable(); // Поле "ID статуса заявки" (внешний ключ)
             $table->timestamps();
 
             // Добавляем внешние ключи для соответствующих полей
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('statusaplication_id')->references('id')->on('status_aplications');
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
+            $table->foreign('student_id')->references('id')->on('students')->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees')->nullable();
+            $table->foreign('statusaplication_id')->references('id')->on('status_aplications')->nullable();
         });
     }
 
