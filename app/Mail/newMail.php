@@ -40,7 +40,7 @@ class newMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your application has been received',
+            subject: 'Hello, My Dear!',
         );
     }
 

@@ -6,8 +6,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\AplicationController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\CheckApplicationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -118,6 +119,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/send', 'App\Http\Controllers\ApplicationController@send');
 
 });
+
+
+// маршруты для коменданта
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/applications', [CheckApplicationController::class, 'showApplications'])->name('applications');
+    Route::get('/applicationdetails/{id}', [CheckApplicationController::class, 'showApplicationDetails'])->name('applicationdetails');
+});
+
 
 
 
