@@ -30,7 +30,7 @@ class ImageController extends Controller
         // return view('dashboard', compact('path', 'path2'));
 
 
-         $path = $request->file('image')->store('uploads', 'public');
+        $path = $request->file('image')->store('uploads', 'public');
         $path2 = $request->file('image2')->store('uploads', 'public');
 
         // Сохранение информации о файлах в базе данных

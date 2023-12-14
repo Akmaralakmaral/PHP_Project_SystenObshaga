@@ -31,4 +31,13 @@ class Application extends Model
         'employee_id',
         'statusaplication_id'
     ];
+    public function statusaplication()
+    {
+        return $this->belongsTo(Status_Aplication::class, 'statusaplication_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

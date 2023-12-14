@@ -1,7 +1,7 @@
 <x-mail::message>
-# Introduction
+# Application Notice
 
-The body of your message.
+We would like to inform you that a new application has been processed.
 
 <!-- <x-mail::button :url="''">
 Button Text

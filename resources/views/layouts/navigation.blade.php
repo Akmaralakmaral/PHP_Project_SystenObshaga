@@ -29,7 +29,19 @@
                         </x-nav-link>
                     @endif
 
+                    @if (Auth::user()->user_role === 'student')
+                        <x-nav-link :href="route('application')" :active="request()->routeIs('application')">
+                            {{ __('Application') }}
+                        </x-nav-link>
 
+                    @endif
+
+                     @if (Auth::user()->user_role === 'commandant')
+                        <x-nav-link :href="route('applications')" :active="request()->routeIs('applications')">
+                            {{ __('List_of_Application') }}
+                        </x-nav-link>
+
+                    @endif
 
                 </div>
             </div>

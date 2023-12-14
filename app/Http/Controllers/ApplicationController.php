@@ -16,23 +16,7 @@ class ApplicationController extends Controller
     public function send()
     {
         // Отправка сообщения текущему пользователю
-        $currentUser = Auth::user();
-        $currentUserEmail = $currentUser ? $currentUser->email : null;
 
-        if ($currentUserEmail) {
-            $newMailCurrentUser = new newMail($currentUserEmail);
-            Mail::send($newMailCurrentUser);
-        }
-
-
-        // Отправка сообщений всем пользователям с 'user_role' равным 'student'
-        $students = User::where('user_role', 'commandant')->get();
-
-        foreach ($students as $student) {
-            $studentEmail = $student->email;
-            $newMailStudent = new newMail($studentEmail);
-            Mail::send($newMailStudent);
-        }
 
 
 
@@ -78,6 +62,23 @@ class ApplicationController extends Controller
 
         ]);
 
+         $currentUser = Auth::user();
+        $currentUserEmail = $currentUser ? $currentUser->email : null;
+
+        if ($currentUserEmail) {
+            $newMailCurrentUser = new newMail($currentUserEmail);
+            Mail::send($newMailCurrentUser);
+        }
+
+
+        // Отправка сообщений всем пользователям с 'user_role' равным 'student'
+        $students = User::where('user_role', 'commandant')->get();
+
+        foreach ($students as $student) {
+            $studentEmail = $student->email;
+            $newMailStudent = new newMail($studentEmail);
+            Mail::send($newMailStudent);
+        }
         return view('student.application');
     }
 
