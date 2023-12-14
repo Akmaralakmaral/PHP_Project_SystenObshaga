@@ -115,8 +115,9 @@ Route::get('/application', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/application', 'App\Http\Controllers\ApplicationController@upload')->name('application.upload');
-});
+    Route::get('/send', 'App\Http\Controllers\ApplicationController@send');
 
+});
 
 
 

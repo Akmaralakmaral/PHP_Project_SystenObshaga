@@ -4,10 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\Student;
+use App\Models\User;
+use Mail;
+use App\Mail\newMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
+
+    public function send()
+    {
+        // Отправка сообщения текущему пользователю
+        $currentUser = Auth::user();
+        $currentUserEmail = $currentUser ? $currentUser->email : null;
+
+        if ($currentUserEmail) {
+            $newMailCurrentUser = new newMail($currentUserEmail);
+            Mail::send($newMailCurrentUser);
+        }
+
+
+        // Отправка сообщений всем пользователям с 'user_role' равным 'student'
+        $students = User::where('user_role', 'commandant')->get();
+
+        foreach ($students as $student) {
+            $studentEmail = $student->email;
+            $newMailStudent = new newMail($studentEmail);
+            Mail::send($newMailStudent);
+        }
+
+
+
+    }
+
+    public function email()
+    {
+        return view('email');
+    }
+
+
+
     public function upload(Request $request)
     {
         $stat_ph_path = $request->file('stat_ph_path_img')->store('stat_ph', 'public');
@@ -43,4 +80,7 @@ class ApplicationController extends Controller
 
         return view('student.application');
     }
+
+
+
 }
