@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\CheckApplicationController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -129,12 +130,11 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/rooms', [CheckApplicationController::class, 'index'])->name('commandant.rooms');
 
-    // Route::post('/send-application-notification/{id}', [CheckApplicationController::class, 'sendApplicationNotification'])
-    // ->name('send.application.notification');
-
      Route::get('/go-to-rooms/{id}', [CheckApplicationController::class, 'goToRooms'])->name('go.to.rooms');
     Route::post('/send-application-notification/{id}', [CheckApplicationController::class, 'sendApplicationNotification'])
         ->name('send.application.notification');
+
+    Route::get('/rooms', [RoomController::class, 'index'])->name('commandant.rooms');
 
 });
 
