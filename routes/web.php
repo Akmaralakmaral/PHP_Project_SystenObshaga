@@ -129,8 +129,12 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/rooms', [CheckApplicationController::class, 'index'])->name('commandant.rooms');
 
+    // Route::post('/send-application-notification/{id}', [CheckApplicationController::class, 'sendApplicationNotification'])
+    // ->name('send.application.notification');
+
+     Route::get('/go-to-rooms/{id}', [CheckApplicationController::class, 'goToRooms'])->name('go.to.rooms');
     Route::post('/send-application-notification/{id}', [CheckApplicationController::class, 'sendApplicationNotification'])
-    ->name('send.application.notification');
+        ->name('send.application.notification');
 
 });
 

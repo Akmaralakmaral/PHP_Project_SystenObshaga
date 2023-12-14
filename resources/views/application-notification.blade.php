@@ -1,11 +1,7 @@
 <x-mail::message>
-# Introduction
+#Application was rejected
 
-The body of your message.
-
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
+Your application for accommodation in a dormitory was rejected. Check your documents for compliance with the list of documents!
 
 Thanks,<br>
 {{ config('app.name') }}

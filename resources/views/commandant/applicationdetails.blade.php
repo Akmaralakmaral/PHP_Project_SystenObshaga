@@ -234,8 +234,7 @@
                     </table>
 
 
-                    <!-- Button to navigate to the 'rooms' page -->
-                   <a href="{{ route('commandant.rooms') }}" class="btn btn-primary">
+                    <a href="{{ route('go.to.rooms', ['id' => $application->id]) }}" class="btn btn-primary">
                         Go to Rooms
                     </a>
 

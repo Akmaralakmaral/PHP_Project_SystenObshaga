@@ -36,6 +36,22 @@ class CheckApplicationController extends Controller
     }
 
 
+     public function goToRooms($id)
+    {
+        $application = Application::find($id);
+
+        if (!$application) {
+            abort(404);
+        }
+
+        // Update statusaplication_id to 2 (assuming 2 corresponds to the desired status)
+        $application->statusaplication_id = 2;
+        $application->save();
+
+        // Redirect to the 'rooms' page or wherever you want
+        return redirect()->route('commandant.rooms')->with('status', 'Status updated successfully!');
+    }
+
    public function sendApplicationNotification($id)
     {
         $application = Application::find($id);
@@ -43,6 +59,10 @@ class CheckApplicationController extends Controller
         if (!$application) {
             abort(404);
         }
+
+        $application->statusaplication_id = 3;
+        $application->save();
+
 
         // Send email
         Mail::to($application->user->email)->send(new ApplicationNotification($application));
