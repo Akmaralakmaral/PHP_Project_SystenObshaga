@@ -74,6 +74,9 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $room->roomGender }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $room->obshaga->name_obshaga }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $room->room_status->status_rooms }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{ route('passes', ['room_id' => $room->id]) }}" class="text-blue-500">View Passes</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

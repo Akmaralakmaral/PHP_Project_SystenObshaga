@@ -28,15 +28,16 @@ class CheckApplicationController extends Controller
         return view('commandant.applicationdetails', compact('application', 'student'));
     }
 
-    public function index()
-    {
-        // Your logic for displaying rooms goes here
+    // public function index()
+    // {
+    //     // Your logic for displaying rooms goes here
 
-        return view('commandant.rooms'); // Assuming 'commandant.rooms' is your view file
-    }
+    //     return view('commandant.rooms'); // Assuming 'commandant.rooms' is your view file
+    // }
 
 
-     public function goToRooms($id)
+
+    public function goToRooms($id)
     {
         $application = Application::find($id);
 
@@ -48,8 +49,8 @@ class CheckApplicationController extends Controller
         $application->statusaplication_id = 2;
         $application->save();
 
-        // Redirect to the 'rooms' page or wherever you want
-        return redirect()->route('commandant.rooms')->with('status', 'Status updated successfully!');
+        // Redirect to the 'rooms' page with the application ID as a query parameter
+        return redirect()->route('commandant.rooms', ['id' => $id])->with('status', 'Status updated successfully!');
     }
 
    public function sendApplicationNotification($id)

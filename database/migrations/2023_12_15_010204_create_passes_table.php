@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id'); // Поле "id студент" (внешний ключ)
             $table->foreign('student_id')->references('id')->on('students');
 
-            $table->unsignedBigInteger('obshaga_id'); // Поле "id общаги" (внешний ключ)
-            $table->foreign('obshaga_id')->references('id')->on('obshagas');
+            $table->date('start_date');
+            $table->date('end_date');
 
             $table->unsignedBigInteger('room_id'); // Поле "id комнаты" (внешний ключ)
             $table->foreign('room_id')->references('id')->on('rooms');

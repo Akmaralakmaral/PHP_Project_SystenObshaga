@@ -10,6 +10,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\CheckApplicationController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\PassController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -135,6 +136,10 @@ Route::middleware(['auth'])->group(function(){
         ->name('send.application.notification');
 
     Route::get('/rooms', [RoomController::class, 'index'])->name('commandant.rooms');
+    Route::get('/passes/{room_id}', [PassController::class, 'index'])->name('passes');
+    Route::get('/passes/create/{room_id}', [PassController::class, 'create'])->name('commandant.passes_create');
+    Route::post('passes/store/{room_id}', [PassController::class, 'store'])->name('passes.store');
+
 
 });
 
